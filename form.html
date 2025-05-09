@@ -1,0 +1,429 @@
+<!-- Add this HTML code just before the closing </main> tag -->
+
+<section id="student-registration" class="container registration-section">
+    <h2 class="section-title">Student Needs Assessment</h2>
+    <p class="form-intro">Please provide information about your student's needs to help us customize their learning experience.</p>
+    
+    <div class="form-container">
+        <form id="student-needs-form">
+            <div class="form-group">
+                <label for="ngo-name">NGO/School Name:</label>
+                <input type="text" id="ngo-name" name="ngo-name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="contact-name">Point of Contact Name:</label>
+                <input type="text" id="contact-name" name="contact-name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="contact-email">Email Address:</label>
+                <input type="email" id="contact-email" name="contact-email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="contact-phone">Phone Number:</label>
+                <input type="tel" id="contact-phone" name="contact-phone">
+            </div>
+            
+            <div class="form-group">
+                <label for="student-count">Number of Students:</label>
+                <input type="number" id="student-count" name="student-count" min="1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="student-age">Age Range:</label>
+                <select id="student-age" name="student-age" required>
+                    <option value="">Please select</option>
+                    <option value="3-6">3-6 years</option>
+                    <option value="7-10">7-10 years</option>
+                    <option value="11-13">11-13 years</option>
+                    <option value="14-18">14-18 years</option>
+                    <option value="18+">18+ years</option>
+                </select>
+            </div>
+            
+            <fieldset class="form-group">
+                <legend>Student Accessibility Needs (Select all that apply):</legend>
+                
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="need-visual" name="accessibility-needs" value="visual">
+                        <label for="need-visual">Visual Impairment</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="need-hearing" name="accessibility-needs" value="hearing">
+                        <label for="need-hearing">Hearing Impairment</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="need-mobility" name="accessibility-needs" value="mobility">
+                        <label for="need-mobility">Mobility Challenges</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="need-cognitive" name="accessibility-needs" value="cognitive">
+                        <label for="need-cognitive">Cognitive Processing</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="need-attention" name="accessibility-needs" value="attention">
+                        <label for="need-attention">Attention Deficit</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="need-learning" name="accessibility-needs" value="learning">
+                        <label for="need-learning">Learning Disabilities</label>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <div class="form-group">
+                <label for="special-requirements">Additional Special Requirements:</label>
+                <textarea id="special-requirements" name="special-requirements" rows="4" placeholder="Please describe any specific needs or challenges your students face..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="class-size">Average Class Size:</label>
+                <select id="class-size" name="class-size">
+                    <option value="">Please select</option>
+                    <option value="1-5">1-5 students</option>
+                    <option value="6-10">6-10 students</option>
+                    <option value="11-20">11-20 students</option>
+                    <option value="21+">21+ students</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="tech-access">Available Technology:</label>
+                <select id="tech-access" name="tech-access" required>
+                    <option value="">Please select</option>
+                    <option value="computers">Desktop Computers</option>
+                    <option value="laptops">Laptops</option>
+                    <option value="tablets">Tablets</option>
+                    <option value="smartphones">Smartphones</option>
+                    <option value="limited">Limited Technology Access</option>
+                </select>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="submit-button">Get Recommendations</button>
+                <button type="reset" class="reset-button">Reset Form</button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="recommendations-container" id="recommendations-panel">
+        <h3>Your Customized Recommendations</h3>
+        <div id="recommendations-content">
+            <!-- Recommendations will be shown here after form submission -->
+        </div>
+    </div>
+</section>
+
+<!-- Add this CSS to your existing <style> section -->
+    <style>
+        :root {
+            --text-dark: #333333;
+            --secondary-color: #4299e1;
+        }
+    
+        .registration-section {
+            background-color: #ebf4ff; /* Light blue background */
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+    
+        .form-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #333333; /* Dark text color */
+        }
+    
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+    
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333333;
+        }
+    
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            font-size: 1rem;
+            color: #333333;
+            transition: border-color 0.3s;
+        }
+    
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #4299e1;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+        }
+    
+        fieldset.form-group {
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            padding: 1rem;
+        }
+    
+        fieldset legend {
+            padding: 0 0.5rem;
+            font-weight: 500;
+        }
+    
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+    
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+    
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+    
+        .checkbox-item label {
+            margin-bottom: 0;
+            font-weight: normal;
+        }
+    
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+    
+        .submit-button {
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    
+        .submit-button:hover {
+            background-color: #2c5282; /* dark blue */
+        }
+    
+        .reset-button {
+            background-color: #e2e8f0;
+            color: #333333;
+            border: none;
+            border-radius: 4px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    
+        .reset-button:hover {
+            background-color: #cbd5e0;
+        }
+    
+        .recommendations-container {
+            background-color: #ebf4ff; /* Light blue background */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            max-width: 800px;
+            margin: 2rem auto 0;
+            display: none;
+        }
+    
+        .recommendations-container h3 {
+            color: #333333; /* Dark text color */
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+    
+        .recommendation-item {
+            background-color: white; /* White background */
+            border-left: 4px solid #4299e1;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 4px 4px 0;
+        }
+    
+        .recommendation-item h4 {
+            color: #333333; /* Dark text color */
+            margin-bottom: 0.5rem;
+        }
+    
+        .recommendation-item p {
+            color: #333333; /* Dark text color */
+            margin: 0;
+        }
+    </style>
+<!-- Add this JavaScript code to your existing <script> section, just before the closing </script> tag -->
+<script>
+    // Student Needs Assessment Form Handling
+    document.getElementById('student-needs-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const ngoName = document.getElementById('ngo-name').value;
+        const contactName = document.getElementById('contact-name').value;
+        const visualNeeds = document.getElementById('need-visual').checked;
+        const hearingNeeds = document.getElementById('need-hearing').checked;
+        const mobilityNeeds = document.getElementById('need-mobility').checked;
+        const cognitiveNeeds = document.getElementById('need-cognitive').checked;
+        const attentionNeeds = document.getElementById('need-attention').checked;
+        const learningNeeds = document.getElementById('need-learning').checked;
+        const specialRequirements = document.getElementById('special-requirements').value;
+        
+        // Generate recommendations based on needs
+        const recommendationsPanel = document.getElementById('recommendations-panel');
+        const recommendationsContent = document.getElementById('recommendations-content');
+        
+        // Clear previous recommendations
+        recommendationsContent.innerHTML = '';
+        
+        // Add greeting
+        const greeting = document.createElement('p');
+        greeting.textContent = `Thank you, ${contactName} from ${ngoName}! Based on your students' needs, we recommend the following features:`;
+        recommendationsContent.appendChild(greeting);
+        
+        // Add recommendations based on selected needs
+        if (visualNeeds) {
+            addRecommendation(
+                'Voice Navigation & Screen Reader', 
+                'Our advanced voice navigation system will enable students with visual impairments to navigate all content hands-free. The built-in screen reader provides clear audio descriptions of all elements.'
+            );
+            
+            addRecommendation(
+                'Braille Support', 
+                'Content can be converted to Braille format, compatible with refreshable Braille displays and other assistive technologies.'
+            );
+        }
+        
+        if (hearingNeeds) {
+            addRecommendation(
+                'Sign Language Videos', 
+                'All educational content includes sign language interpretation by professional interpreters, ensuring full accessibility for hearing-impaired students.'
+            );
+            
+            addRecommendation(
+                'Closed Captioning', 
+                'Detailed closed captions are available for all video and audio content, with options to customize text size and color for maximum readability.'
+            );
+        }
+        
+        if (mobilityNeeds) {
+            addRecommendation(
+                'Adaptive Controls', 
+                'Our platform is compatible with various adaptive switches and controllers, allowing students with mobility challenges to navigate content easily.'
+            );
+            
+            addRecommendation(
+                'Eye-Tracking Support', 
+                'For students with severe mobility restrictions, our platform is compatible with eye-tracking devices for hands-free navigation.'
+            );
+        }
+        
+        if (cognitiveNeeds) {
+            addRecommendation(
+                'Simplified Content Layouts', 
+                'Content can be displayed in simplified formats with reduced distractions, helping students with cognitive processing challenges focus better.'
+            );
+            
+            addRecommendation(
+                'Pacing Controls', 
+                'Students can control the pace of content delivery, with options to slow down, repeat, or break complex topics into smaller, more manageable segments.'
+            );
+        }
+        
+        if (attentionNeeds) {
+            addRecommendation(
+                'Focus Mode', 
+                'A special distraction-free interface that highlights only essential content and removes unnecessary elements to help maintain attention.'
+            );
+            
+            addRecommendation(
+                'Progress Tracking', 
+                'Visual progress indicators and achievement rewards help maintain motivation and focus throughout learning sessions.'
+            );
+        }
+        
+        if (learningNeeds) {
+            addRecommendation(
+                'Multi-Modal Content', 
+                'Information is presented in multiple formats (text, audio, visual, interactive) to accommodate different learning styles and needs.'
+            );
+            
+            addRecommendation(
+                'AI-Powered Learning Paths', 
+                'Our AI system adapts content difficulty and presentation based on each students learning patterns and needs'
+            );
+        }
+        
+        // Add recommendation for special requirements if provided
+        if (specialRequirements.trim() !== '') {
+            addRecommendation(
+                'Personalized Support Plan', 
+                'Based on your additional requirements, our team will develop a customized support plan for your students. A member of our educational support team will contact you within 48 hours to discuss specifics.'
+            );
+        }
+        
+        // Add AI Assistance recommendation for all
+        addRecommendation(
+            'AI Learning Assistant', 
+            'Our AI assistant provides personalized help for all students, adapting its communication style to match their specific needs and accessibility requirements.'
+        );
+        
+        // Show recommendations panel
+        recommendationsPanel.style.display = 'block';
+        
+        // Scroll to recommendations
+        recommendationsPanel.scrollIntoView({ behavior: 'smooth' });
+        
+        // Announce to screen reader
+        announceToScreenReader("Recommendations generated based on your input. Scroll down to view them.");
+        
+        function addRecommendation(title, description) {
+            const item = document.createElement('div');
+            item.className = 'recommendation-item';
+            
+            const heading = document.createElement('h4');
+            heading.textContent = title;
+            
+            const desc = document.createElement('p');
+            desc.textContent = description;
+            
+            item.appendChild(heading);
+            item.appendChild(desc);
+            recommendationsContent.appendChild(item);
+        }
+    });
+</script>
