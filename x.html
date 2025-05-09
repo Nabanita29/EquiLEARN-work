@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EquiLearn - Accessible Learning Platform</title>
+    <style>
+        :root {
+    --primary-color: #2b6cb0;     /* Deeper blue */
+    --secondary-color: #4299e1;   /* Lighter blue */
+    --accent-color: #3182ce;      /* Medium blue */
+    --light-bg: #f7fafc;          /* Very light blue-gray */
+    --dark-bg: #1a365d;           /* Dark navy blue */
+    --text-dark: #2d3748;         /* Dark gray with blue undertone */
+    --text-light: #edf2f7;        /* Off-white with blue tint */
+    }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light-bg);
+            padding: 0;
+            margin: 0;
+            transition: background-color 0.3s ease;
+        }
+
+        body.high-contrast {
+            background-color: black;
+            color: yellow;
+        }
+
+        body.high-contrast .card,
+        body.high-contrast .navbar,
+        body.high-contrast footer {
+            background-color: black;
+            color: yellow;
+            border: 2px solid yellow;
+        }
+
+        body.high-contrast a {
+            color: yellow;
+            text-decoration: underline;
+        }
+
+        body.high-contrast button {
+            background-color: black;
+            color: yellow;
+            border: 2px solid yellow;
+        }
+
+        body.high-contrast h1, 
+        body.high-contrast h2, 
+        body.high-contrast h3 {
+            color: yellow;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--accent-color);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        .navbar {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 1.25rem 3rem;        /* More horizontal padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);  /* Enhanced shadow */
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    padding: 0.5rem 0.8rem;       /* Add padding around links */
+    border-radius: 4px;           /* Slight rounding */
+}
+
+.nav-links a:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);  /* Subtle background on hover */
+    text-decoration: none;        /* Remove underline, use background instead */
+}
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #e9ecef;
+            text-decoration: underline;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0.5rem;
+        }
+
+        .cta-button:hover {
+            background-color: #e5006e;
+        }
+
+        .accessibility-bar {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .accessibility-tools {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .accessibility-tools button {
+            background-color: var(--text-light);
+            color: var(--text-dark);
+            border: none;
+            padding: 0.5rem;
+            margin: 0.25rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .accessibility-tools button:hover {
+            background-color: #ddd;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;          /* Increased spacing under titles */
+            color: var(--primary-color);
+            font-size: 2.2rem;            /* Slightly larger section titles */
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;                  /* More space between step cards */
+    margin-bottom: 4rem;          /* More space after section */
+}
+
+.step-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    padding: 2rem;                /* More internal padding */
+    position: relative;
+}
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .contact-info {
+            margin-top: 1rem;
+        }
+
+        .ai-assistant {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .ai-assistant:hover {
+            transform: scale(1.1);
+        }
+
+        .ai-assistant-icon {
+            font-size: 1.5rem;
+        }
+
+        .assistant-panel {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+        }
+
+        .assistant-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .assistant-body {
+            padding: 1rem;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .assistant-input {
+            display: flex;
+            padding: 0.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .assistant-input input {
+            flex-grow: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+
+        .assistant-input button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .nav-links {
+                margin-top: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .hero {
+                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+                color: var(--text-light);
+                padding: 5rem 2rem;           /* More vertical space in hero */
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 3.2rem;            /* Larger hero title */
+                margin-bottom: 1.5rem;        /* More space below title */
+                font-weight: 700;             /* Bolder title */
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .accessibility-bar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .accessibility-tools {
+                margin-top: 0.5rem;
+                justify-content: center;
+            }
+        }
+
+        /* Voice recognition animation */
+        .voice-active {
+            animation: pulsate 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulsate {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="accessibility-bar" aria-label="Accessibility Tools">
+        <span>Accessibility Tools:</span>
+        <div class="accessibility-tools">
+            <button id="contrast-toggle" aria-label="Toggle high contrast mode">High Contrast</button>
+            <button id="font-increase" aria-label="Increase font size">A+</button>
+            <button id="font-decrease" aria-label="Decrease font size">A-</button>
+            <button id="voice-nav-toggle" aria-label="Toggle voice navigation">Voice Navigation</button>
+            <button id="screen-reader-toggle" aria-label="Read page aloud">Screen Reader</button>
+        </div>
+    </div>
+
+    
+
+    <nav class="navbar" aria-label="Main Navigation">
+        <div class="logo">
+            <span class="logo-icon">📚</span>
+            <span>EquiLearn</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#about" aria-label="Learn about EquiLearn">About</a></li>
+            <li><a href="#features" aria-label="Explore our features">Features</a></li>
+            <li><a href="#for-ngos" aria-label="Information for NGOs">For NGOs</a></li>
+            <li><a href="#contact" aria-label="Contact us">Contact</a></li>
+            <li><a href="./form.html" id="getadmission" aria-label="Get Admissions">Get admission</a></li>
+
+
+        </ul>
+    </nav>
+
+    <div class="hero">
+        <h1>Learning Made Accessible For All</h1>
+        <p>EquiLearn is a revolutionary platform designed to make education accessible for children with various disabilities, including visual, hearing, and sensory impairments.</p>
+        <button class="cta-button" id="get-started-btn">Get Started</button>
+        <button class="cta-button" id="demo-btn">Watch Demo</button>
+    </div>
+
+    
+
+    <main id="main-content">
+        <section id="about" class="container">
+            <h2 class="section-title">About EquiLearn</h2>
+            <p>EquiLearn is a revolutionary learning platform specifically designed to make education accessible for children with various disabilities. We believe every child deserves equal access to quality education, regardless of their physical or cognitive challenges.</p>
+            <p>Our platform incorporates multiple accessibility features to ensure all children can learn effectively. To get started, simply speak your commands or use the navigation menu. Our AI assistant is always ready to help explain any concept or guide you through the platform.</p>
+        </section>
+
+        <section id="features" class="container">
+            <h2 class="section-title">Our Accessibility Features</h2>
+            <div class="features">
+                <div class="card" tabindex="0">
+                    <div class="card-icon">🗣️</div>
+                    <h3>Voice Navigation</h3>
+                    <p>Every function can be controlled through voice commands, making navigation easy for visually impaired users.</p>
+                </div>
+                <div class="card" tabindex="0">
+                    <div class="card-icon">👆</div>
+                    <h3>Braille Support</h3>
+                    <p>Content available in Braille format for visually impaired students, compatible with Braille display devices.</p>
+                </div>
+                <div class="card" tabindex="0">
+                    <div class="card-icon">🤖</div>
+                    <h3>AI Assistance</h3>
+                    <p>Smart help available for every section of the platform, providing personalized guidance to each student.</p>
+                </div>
+                <div class="card" tabindex="0">
+                    <div class="card-icon">👐</div>
+                    <h3>Sign Language</h3>
+                    <p>Videos with sign language interpretation to make content accessible for hearing-impaired students.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="for-ngos" class="container">
+            <h2 class="section-title">For NGOs and Educators</h2>
+            <p>EquiLearn provides powerful tools for organizations working with children with disabilities. Here's how you can utilize our platform to make a difference:</p>
+            
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Register Students</h3>
+                    <p>Create profiles for the children you work with, specifying their educational needs and any disabilities.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Customize Learning Paths</h3>
+                    <p>Our system will automatically adapt content based on each student's profile.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Monitor Progress</h3>
+                    <p>Track each student's learning journey through our analytics dashboard.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Provide Support</h3>
+                    <p>Use our platform as a teaching aid during your sessions with students.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h3>Expand Reach</h3>
+                    <p>Help more children access education by introducing them to our platform.</p>
+                </div>
+            </div>
+
+            <p>Our team is available to provide training and support to your organization. Contact us to learn more about partnership opportunities.</p>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <h2>Contact EquiLearn</h2>
+            <p>Our team is available to provide training and support to your organization.</p>
+            <div class="contact-info">
+                <p>Email: support@equilearn.org</p>
+                <p>Phone: +1-234-567-8900</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="ai-assistant" id="ai-assistant-button" aria-label="Open AI Assistant">
+        <div class="ai-assistant-icon">🤖</div>
+    </div>
+
+    <div class="assistant-panel" id="assistant-panel">
+        <div class="assistant-header">
+            <h3>EquiLearn Assistant</h3>
+            <button id="close-assistant" aria-label="Close assistant">✕</button>
+        </div>
+        <div class="assistant-body" id="assistant-body">
+            <p>Hello! I'm your EquiLearn assistant. How can I help you today?</p>
+        </div>
+        <div class="assistant-input">
+            <input type="text" id="assistant-message" placeholder="Type your question..." aria-label="Type your message">
+            <button id="send-message">Send</button>
+            <button id="voice-input" aria-label="Voice input">🎤</button>
+        </div>
+    </div>
+
+    <script>
+        // Accessibility Functions
+        const body = document.body;
+        let fontSize = 16;
+        let isVoiceNavActive = false;
+        let recognition = null;
+        let currentUtterance = null;
+
+        // High Contrast Toggle
+        document.getElementById('contrast-toggle').addEventListener('click', function() {
+            body.classList.toggle('high-contrast');
+            let message = body.classList.contains('high-contrast') ? 
+                "High contrast mode enabled" : "High contrast mode disabled";
+            announceToScreenReader(message);
+        });
+
+        // Font Size Controls
+        document.getElementById('font-increase').addEventListener('click', function() {
+            if (fontSize < 24) {
+                fontSize += 2;
+                document.body.style.fontSize = `${fontSize}px`;
+                announceToScreenReader(`Font size increased to ${fontSize} pixels`);
+            } else {
+                announceToScreenReader("Maximum font size reached");
+            }
+        });
+
+        document.getElementById('font-decrease').addEventListener('click', function() {
+            if (fontSize > 12) {
+                fontSize -= 2;
+                document.body.style.fontSize = `${fontSize}px`;
+                announceToScreenReader(`Font size decreased to ${fontSize} pixels`);
+            } else {
+                announceToScreenReader("Minimum font size reached");
+            }
+        });
+
+        // Voice Navigation
+        document.getElementById('voice-nav-toggle').addEventListener('click', toggleVoiceNavigation);
+
+        function toggleVoiceNavigation() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert("Voice recognition is not supported in your browser. Please try using Chrome.");
+                return;
+            }
+
+            const voiceButton = document.getElementById('voice-nav-toggle');
+            
+            if (isVoiceNavActive) {
+                stopVoiceRecognition();
+                voiceButton.textContent = "Voice Navigation";
+                voiceButton.classList.remove('voice-active');
+                announceToScreenReader("Voice navigation disabled");
+            } else {
+                startVoiceRecognition();
+                voiceButton.textContent = "Voice Active";
+                voiceButton.classList.add('voice-active');
+                announceToScreenReader("Voice navigation enabled. Try saying 'go to features' or 'open assistant'");
+            }
+            
+            isVoiceNavActive = !isVoiceNavActive;
+        }
+
+        function startVoiceRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = false;
+            
+            recognition.onresult = function(event) {
+                const command = event.results[event.results.length - 1][0].transcript.toLowerCase().trim();
+                processVoiceCommand(command);
+            };
+            
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error', event.error);
+                if (isVoiceNavActive) {
+                    // Try to restart if there was an error but voice nav should be active
+                    setTimeout(startVoiceRecognition, 1000);
+                }
+            };
+            
+            recognition.start();
+        }
+
+        function stopVoiceRecognition() {
+            if (recognition) {
+                recognition.stop();
+                recognition = null;
+            }
+        }
+
+        function processVoiceCommand(command) {
+            console.log('Voice command:', command);
+            
+            // Navigation commands
+            if (command.includes('go to about') || command.includes('about section')) {
+                document.querySelector('a[href="#about"]').click();
+                announceToScreenReader("Navigating to About section");
+            } else if (command.includes('go to features') || command.includes('features section')) {
+                document.querySelector('a[href="#features"]').click();
+                announceToScreenReader("Navigating to Features section");
+            } else if (command.includes('go to ngo') || command.includes('for ngo')) {
+                document.querySelector('a[href="#for-ngos"]').click();
+                announceToScreenReader("Navigating to NGO section");
+            } else if (command.includes('go to contact') || command.includes('contact section')) {
+                document.querySelector('a[href="#contact"]').click();
+                announceToScreenReader("Navigating to Contact section");
+            
+            // Accessibility commands
+            } else if (command.includes('high contrast') || command.includes('toggle contrast')) {
+                document.getElementById('contrast-toggle').click();
+            } else if (command.includes('increase font') || command.includes('bigger text')) {
+                document.getElementById('font-increase').click();
+            } else if (command.includes('decrease font') || command.includes('smaller text')) {
+                document.getElementById('font-decrease').click();
+            } else if (command.includes('read page') || command.includes('read aloud')) {
+                document.getElementById('screen-reader-toggle').click();
+            
+            // Assistant commands
+            } else if (command.includes('open assistant') || command.includes('show assistant')) {
+                document.getElementById('ai-assistant-button').click();
+                announceToScreenReader("Assistant opened");
+            } else if (command.includes('close assistant') || command.includes('hide assistant')) {
+                if (assistantPanel.style.display === 'flex') {
+                    document.getElementById('close-assistant').click();
+                    announceToScreenReader("Assistant closed");
+                }
+            
+            // CTA commands
+            } else if (command.includes('get started')) {
+                document.getElementById('get-started-btn').click();
+                announceToScreenReader("Getting started");
+            } else if (command.includes('watch demo') || command.includes('play demo')) {
+                document.getElementById('demo-btn').click();
+                announceToScreenReader("Opening demo");
+            
+            // Help command
+            } else if (command.includes('help') || command.includes('what can i say')) {
+                announceToScreenReader("You can say: go to about, go to features, go to NGO, go to contact, high contrast, increase font, decrease font, read page, open assistant, close assistant, get started, or watch demo");
+            }
+        }
+
+        // Screen Reader Function
+        document.getElementById('screen-reader-toggle').addEventListener('click', toggleScreenReader);
+
+        function toggleScreenReader() {
+            if (currentUtterance) {
+                window.speechSynthesis.cancel();
+                currentUtterance = null;
+                announceToScreenReader("Screen reader stopped");
+                return;
+            }
+
+            const mainContent = document.getElementById('main-content').textContent;
+            readText("Reading page content: " + mainContent);
+            announceToScreenReader("Screen reader started");
+        }
+
+        function readText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Cancel any ongoing speech
+                const utterance = new SpeechSynthesisUtterance(text);
+                currentUtterance = utterance;
+                
+                utterance.onend = function() {
+                    currentUtterance = null;
+                };
+                
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function announceToScreenReader(message) {
+            // Create an aria-live region for announcements
+            let announce = document.getElementById('screen-reader-announce');
+            if (!announce) {
+                announce = document.createElement('div');
+                announce.id = 'screen-reader-announce';
+                announce.setAttribute('aria-live', 'assertive');
+                announce.setAttribute('aria-atomic', 'true');
+                announce.style.position = 'absolute';
+                announce.style.width = '1px';
+                announce.style.height = '1px';
+                announce.style.overflow = 'hidden';
+                announce.style.clip = 'rect(0, 0, 0, 0)';
+                document.body.appendChild(announce);
+            }
+            
+            announce.textContent = message;
+            
+            // Also use speech synthesis for immediate feedback
+            if ('speechSynthesis' in window) {
+                // We don't replace currentUtterance here to avoid interrupting longer reads
+                const announcement = new SpeechSynthesisUtterance(message);
+                announcement.volume = 1;
+                announcement.rate = 1;
+                announcement.pitch = 1;
+                window.speechSynthesis.speak(announcement);
+            }
+        }
+
+        // AI Assistant Panel
+        const assistantButton = document.getElementById('ai-assistant-button');
+        const assistantPanel = document.getElementById('assistant-panel');
+        const closeAssistant = document.getElementById('close-assistant');
+        const sendMessage = document.getElementById('send-message');
+        const messageInput = document.getElementById('assistant-message');
+        const assistantBody = document.getElementById('assistant-body');
+        const voiceInput = document.getElementById('voice-input');
+
+        assistantButton.addEventListener('click', function() {
+            assistantPanel.style.display = assistantPanel.style.display === 'flex' ? 'none' : 'flex';
+            if (assistantPanel.style.display === 'flex') {
+                messageInput.focus();
+            }
+        });
+
+        closeAssistant.addEventListener('click', function() {
+            assistantPanel.style.display = 'none';
+        });
+
+        sendMessage.addEventListener('click', sendAssistantMessage);
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendAssistantMessage();
+            }
+        });
+
+        function sendAssistantMessage() {
+            const message = messageInput.value.trim();
+            if (message) {
+                // Add user message
+                const userMsg = document.createElement('p');
+                userMsg.innerHTML = `<strong>You:</strong> ${message}`;
+                assistantBody.appendChild(userMsg);
+                
+                // Add AI response (simple implementation)
+                const aiResponse = getAIResponse(message);
+                const aiMsg = document.createElement('p');
+                aiMsg.innerHTML = `<strong>Assistant:</strong> ${aiResponse}`;
+                assistantBody.appendChild(aiMsg);
+                
+                // Clear input and scroll to bottom
+                messageInput.value = '';
+                assistantBody.scrollTop = assistantBody.scrollHeight;
+            }
+        }
+
+        // Voice input for assistant
+        voiceInput.addEventListener('click', function() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert("Voice input is not supported in your browser. Please try using Chrome.");
+                return;
+            }
+            
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const voiceRec = new SpeechRecognition();
+            
+            voiceInput.classList.add('voice-active');
+            announceToScreenReader("Listening for your message");
+            
+            voiceRec.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                messageInput.value = transcript;
+                voiceInput.classList.remove('voice-active');
+                setTimeout(() => sendAssistantMessage(), 500);
+            };
+            
+            voiceRec.onend = function() {
+                voiceInput.classList.remove('voice-active');
+            };
+            
+            voiceRec.onerror = function() {
+                voiceInput.classList.remove('voice-active');
+                announceToScreenReader("Voice input error. Please try again.");
+            };
+            
+            voiceRec.start();
+        });
+
+        // Simple AI responses based on keywords (very basic implementation)
+        function getAIResponse(message) {
+            message = message.toLowerCase();
+            
+            if (message.includes('hello') || message.includes('hi ')) {
+                return "Hello! How can I help you today?";
+            } else if (message.includes('help')) {
+                return "I can help you navigate the EquiLearn platform, explain features, or provide information about accessibility options. What would you like to know?";
+            } else if (message.includes('feature') || message.includes('what can')) {
+                return "EquiLearn offers voice navigation, Braille support, sign language videos, and AI assistance. Which feature would you like to know more about?";
+            } else if (message.includes('voice') || message.includes('speech')) {
+                return "Our voice navigation lets you control the platform with simple voice commands. Try saying 'go to features' or 'increase font' to navigate hands-free.";
+            } else if (message.includes('braille')) {
+                return "Our Braille support converts text content into Braille format, compatible with refreshable Braille displays and other assistive technologies.";
+            } else if (message.includes('sign language') || message.includes('deaf')) {
+                return "All our educational videos include sign language interpretation, making content accessible for hearing-impaired students.";
+            } else if (message.includes('ngo') || message.includes('organization')) {
+                return "For NGOs, we offer student registration tools, customized learning paths, progress tracking, and teaching aids. Would you like more information about any of these features?";
+            } else if (message.includes('contact') || message.includes('support')) {
+                return "You can reach our support team at support@equilearn.org or call +1-234-567-8900 for immediate assistance.";
+            } else {
+                return "I'm here to help with any questions about EquiLearn. Could you please rephrase your question or tell me specifically what you'd like to know about our platform?";
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Announce navigation to screen reader
+                    const sectionName = targetId.replace('#', '');
+                    announceToScreenReader(`Navigated to ${sectionName} section`);
+                }
+            });
+        });
+
+        // CTA Button Actions
+        document.getElementById('get-started-btn').addEventListener('click', function() {
+            // In a real implementation, this might redirect to a signup page
+            alert("This would take you to the registration page. For NGO signup, please contact us directly.");
+        });
+
+        document.getElementById('demo-btn').addEventListener('click', function() {
+            // In a real implementation, this would play a demo video
+            alert("This would play a demonstration video showing how EquiLearn works for different disabilities.");
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial state
+            document.body.style.fontSize = `${fontSize}px`;
+            
+            // Focus on first element for keyboard navigation
+            document.querySelector('.skip-link').focus();
+            
+            // Check for saved preferences (in a real app)
+            // This is a simplified version - a real implementation would use localStorage
+            
+            // Announce page loaded to screen readers
+            setTimeout(() => {
+                announceToScreenReader("EquiLearn page loaded. Press Tab to navigate or use voice commands.");
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
